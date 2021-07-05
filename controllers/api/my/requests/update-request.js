@@ -1,7 +1,7 @@
 const { body } = require('express-validator')
 
-const { authenticateCurrentUserByToken, checkValidation, MulterParser } = require('../../_helpers')
-const { Request } = require('../../../models')
+const { authenticateCurrentUserByToken, checkValidation, MulterParser } = require('../../../../helpers')
+const { Request } = require('../../../../models')
 
 const permittedChangeParams = ['note', 'plan', 'template']
 
@@ -27,4 +27,4 @@ const apiMyRequestsUpdate = async function(req, res) {
   res.status(200).json({ request })
 }
 
-module.exports = [authenticateCurrentUserByToken('json'), MulterParser.none(), validation, checkValidation, apiMyRequestsUpdate]
+module.exports = [authenticateCurrentUserByToken, MulterParser.none(), validation, checkValidation, apiMyRequestsUpdate]

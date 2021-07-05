@@ -1,4 +1,4 @@
-const getTodoById = require('../../../helpers/my/requests/get-todo-by-id')
+const getTodoById = require('../../../../helpers/get-user-by-token')
 
 const apiRequestsGetShow = async function (req, res) {
   const { locals: { currentRequest } } = res

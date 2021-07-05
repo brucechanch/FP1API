@@ -1,5 +1,5 @@
-const { authenticateCurrentUserByToken } = require('../../_helpers')
-const { Request } = require('../../../models')
+const { authenticateCurrentUserByToken } = require('../../../../helpers')
+const { Request } = require('../../../../models')
 
 const apiMyRequestsDestroy = async function(req, res) {
   const { params: { id } } = req
@@ -16,4 +16,4 @@ const apiMyRequestsDestroy = async function(req, res) {
   res.status(204).json('Request Deleted')
 }
 
-module.exports = [authenticateCurrentUserByToken('json'), apiMyRequestsDestroy]
+module.exports = [authenticateCurrentUserByToken, apiMyRequestsDestroy]

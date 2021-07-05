@@ -4,6 +4,7 @@ const { body } = require('express-validator')
 
 const { User } = require('../../../models')
 const checkValidation = require('../../../helpers/check-validation')
+const MulterParser = require('../../../helpers/MulterParser')
 
 const permittedSignupParams = ['email', 'passwordHash']
 
@@ -31,11 +32,18 @@ const userSerializer = function(values) {
 const apiAuthSignup = async function(req, res) {
   const { body: userParams } = req
 
+  // Build a new user
   const user = await User.build(userParams, { attributes: permittedSignupParams })
+  if (req.file && req.file.location) {
+    user.avatar = req.file.location
+  }
+  // Set the passwordHash with the hashed password with 10 rounds of salting
   user.passwordHash = await bcrypt.hash(userParams.password, 10)
+  // Saves the user
   await user.save()
 
+  // Prevents the passwordHash from being sent!
   res.status(200).json(userSerializer(user))
 }
 
-module.exports = [multer().none(), checkValidation(validation), apiAuthSignup]
+module.exports = [MulterParser.single('avatar'), checkValidation(validation), apiAuthSignup]

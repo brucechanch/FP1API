@@ -1,5 +1,5 @@
 const { body } = require('express-validator')
-const { checkValidation, MulterParser, authenticateCurrentUserByToken } = require('../../_helpers')
+const { checkValidation, MulterParser, authenticateCurrentUserByToken } = require('../../../../helpers')
 
 const permittedCreateRequestParams = ['template', 'note', 'plan']
 
@@ -29,4 +29,4 @@ const apiCreateRequest = async function(req, res) {
   res.status(200).json({ request })
 }
 
-module.exports = [authenticateCurrentUserByToken('json'), MulterParser.none(), validation, checkValidation, apiCreateRequest]
+module.exports = [authenticateCurrentUserByToken, MulterParser.none(), validation, checkValidation, apiCreateRequest]

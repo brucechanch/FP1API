@@ -1,8 +1,8 @@
 const { body } = require('express-validator')
 
-const { authenticateCurrentUserByToken, checkValidation, MulterParser } = require('../../_helpers')
+const { authenticateCurrentUserByToken, checkValidation, MulterParser } = require('../../../../helpers')
 
-const permittedSignupParams = ['email']
+const permittedSignupParams = ['email','avatar']
 
 const validation = [
   body('email')
