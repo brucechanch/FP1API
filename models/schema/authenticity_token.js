@@ -17,12 +17,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'AuthenticityToken',
+    tableName: 'AuthenticityTokens',
     schema: 'public',
     timestamps: true,
     indexes: [
       {
-        name: "AuthenticityToken_pkey",
+        name: "AuthenticityTokens_pkey",
         unique: true,
         fields: [
           { name: "id" },

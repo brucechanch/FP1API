@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt")
 const multer = require("multer")
-const { body } = require('express-validator')
+const { body, check } = require('express-validator')
 
 const { User } = require('../../../models')
 const checkValidation = require('../../../helpers/check-validation')
@@ -9,6 +9,9 @@ const MulterParser = require('../../../helpers/MulterParser')
 const permittedSignupParams = ['email', 'passwordHash']
 
 const validation = [
+  check('avatar').custom(function(value, { req }) { //Validation of the avatar no need to clone
+    return !!req.file
+  }).withMessage('Avatar is Required'),
   body('email')
     .notEmpty().withMessage('Email is Required')
     .isEmail().withMessage('Email must be valid')

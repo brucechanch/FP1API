@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('AuthenticityToken', {
+    await queryInterface.createTable('AuthenticityTokens', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -27,6 +27,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('AuthenticityToken');
+    await queryInterface.dropTable('AuthenticityTokens');
   }
 };
