@@ -7,6 +7,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    username: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      unique: "Users_username_key"
+    },
     email: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -38,6 +43,13 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         fields: [
           { name: "id" },
+        ]
+      },
+      {
+        name: "Users_username_key",
+        unique: true,
+        fields: [
+          { name: "username" },
         ]
       },
     ]

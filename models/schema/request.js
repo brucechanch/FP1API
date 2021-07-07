@@ -11,12 +11,16 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true
     },
+    plan: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
     template: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
     note: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {

@@ -16,17 +16,12 @@ const validation = [
 ]
 
 const apiCreateRequest = async function(req, res) {
-  const { body: requestParams } = req
-  const currentUser = res.locals.currentUser
+  const { locals: { currentUser } } = res
+  const { body } = req
 
-  const data = requestParams
-  if (req.file && req.file.location) {
-    data.photo = req.file.location
-  }
+  const request = await currentUser.createRequest(body, { fields: permittedCreateRequestParams })
+  return res.status(200).json({ request })
 
-  const request = await currentUser.createRequest(data, { attributes: permittedCreateRequestParams })
-
-  res.status(200).json({ request })
 }
 
-module.exports = [authenticateCurrentUserByToken, MulterParser.none(), validation, checkValidation, apiCreateRequest]
+module.exports = [authenticateCurrentUserByToken, MulterParser.none(), checkValidation(validation), apiCreateRequest]

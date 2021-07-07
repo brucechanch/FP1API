@@ -6,12 +6,20 @@ const { User } = require('../../../models')
 const checkValidation = require('../../../helpers/check-validation')
 const MulterParser = require('../../../helpers/MulterParser')
 
-const permittedSignupParams = ['email', 'passwordHash']
+const permittedSignupParams = ['username','email', 'passwordHash']
 
 const validation = [
   // check('avatar').custom(function(value, { req }) { //Validation of the avatar no need to clone
   //   return !!req.file
   // }).withMessage('Avatar is Required'),
+  body('username')
+    .notEmpty().withMessage('Username is Required')
+    .isString().withMessage('Username must be a string')
+    .custom(async function(username) {
+      if (username) {
+        const user = await User.findOne({ where: { username } })
+        if (user) return Promise.reject()
+      } }).withMessage('Username already in use'),
   body('email')
     .notEmpty().withMessage('Email is Required')
     .isEmail().withMessage('Email must be valid')
@@ -34,6 +42,8 @@ const userSerializer = function(values) {
 
 const apiAuthSignup = async function(req, res) {
   const { body: userParams } = req
+
+  console.log(userParams)
 
   // Build a new user
   const user = await User.build(userParams, { attributes: permittedSignupParams })
