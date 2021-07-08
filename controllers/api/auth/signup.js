@@ -9,9 +9,11 @@ const MulterParser = require('../../../helpers/MulterParser')
 const permittedSignupParams = ['username','email', 'passwordHash']
 
 const validation = [
-  // check('avatar').custom(function(value, { req }) { //Validation of the avatar no need to clone
-  //   return !!req.file
-  // }).withMessage('Avatar is Required'),
+  body('avatar')
+  .custom(function(value, { req }) { //Validation of the avatar no need to clone
+    return !!req.file
+  }).withMessage('Avatar is Required'),
+
   body('username')
     .notEmpty().withMessage('Username is Required')
     .isString().withMessage('Username must be a string')
@@ -20,6 +22,7 @@ const validation = [
         const user = await User.findOne({ where: { username } })
         if (user) return Promise.reject()
       } }).withMessage('Username already in use'),
+
   body('email')
     .notEmpty().withMessage('Email is Required')
     .isEmail().withMessage('Email must be valid')
@@ -29,6 +32,7 @@ const validation = [
         if (user) return Promise.reject()
       }
     }).withMessage('Email already in use'),
+
   body('password')
     .notEmpty().withMessage('Password is Required')
     .isLength({ min: 6 }).withMessage('Password must be longer or equal to 6 characters')
@@ -59,4 +63,4 @@ const apiAuthSignup = async function(req, res) {
   res.status(200).json(userSerializer(user))
 }
 
-module.exports = [MulterParser.none(), checkValidation(validation), apiAuthSignup]
+module.exports = [MulterParser.single('avatar'), checkValidation(validation), apiAuthSignup]

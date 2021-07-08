@@ -21,10 +21,11 @@ const apiMyRequestsUpdate = async function(req, res) {
       id: Number(RequestId) || 0
     }
   })
+
   if (!request) return res.status(404).json({ message: `Request with ID: ${RequestId} not found!` })
 
   await request.update(body, { fields: permittedChangeParams })
   res.status(200).json({ request })
 }
 
-module.exports = [authenticateCurrentUserByToken, MulterParser.none(), validation, checkValidation, apiMyRequestsUpdate]
+module.exports = [authenticateCurrentUserByToken, MulterParser.none(), checkValidation(validation), apiMyRequestsUpdate]
