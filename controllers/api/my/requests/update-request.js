@@ -3,9 +3,10 @@ const { body } = require('express-validator')
 const { authenticateCurrentUserByToken, checkValidation, MulterParser } = require('../../../../helpers')
 const { Request } = require('../../../../models')
 
-const permittedChangeParams = ['note', 'plan', 'template']
+const permittedChangeParams = ['title','note', 'plan', 'template']
 
 const validation = [
+  body('title').isString().withMessage('Title must be valid').notEmpty().withMessage('Title is Required'),
   body('note').isString().withMessage('Note must be valid').notEmpty().withMessage('Note is Required'),
   body('plan').isString().withMessage('Plan must be valid').notEmpty().withMessage('Plan must be selected'),
   body('template').isString().withMessage('Template must be valid').notEmpty().withMessage('Template must be selected')

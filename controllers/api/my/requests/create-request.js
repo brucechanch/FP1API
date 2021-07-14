@@ -1,9 +1,12 @@
 const { body } = require('express-validator')
 const { checkValidation, MulterParser, authenticateCurrentUserByToken } = require('../../../../helpers')
 
-const permittedCreateRequestParams = ['template', 'note', 'plan']
+const permittedCreateRequestParams = ['title','template', 'note', 'plan']
 
 const validation = [
+  body('title')
+    .notEmpty().withMessage('Title is Required')
+    .isString().withMessage('Title must be valid'),
   body('note')
     .notEmpty().withMessage('Note is Required')
     .isString().withMessage('Note must be valid'),
