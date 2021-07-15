@@ -11,12 +11,17 @@ module.exports = {
       UserId: {
         type: Sequelize.INTEGER
       },
-      //Plan A-F here
+      title:{
+        type: Sequelize.STRING
+      },
+      plan:{
+        type: Sequelize.STRING
+      },
       template:{
         type: Sequelize.STRING
       },
       note:{
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

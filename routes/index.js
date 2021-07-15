@@ -11,6 +11,7 @@ router.delete('/api/auth/logout',                             require('../contro
 
 router.get(   '/api/my/profile',                              require('../controllers/api/my/profile/get-show'))
 router.put(   '/api/my/profile',                              require('../controllers/api/my/profile/update-profile'))
+router.put(   '/api/my/profile/password',                     require('../controllers/api/my/profile/password'))
 
 router.get(   '/api/my/requests',                             require('../controllers/api/my/requests/get-index'))
 router.post(  '/api/my/requests',                             require('../controllers/api/my/requests/create-request'))

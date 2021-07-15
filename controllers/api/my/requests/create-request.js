@@ -1,9 +1,12 @@
 const { body } = require('express-validator')
 const { checkValidation, MulterParser, authenticateCurrentUserByToken } = require('../../../../helpers')
 
-const permittedCreateRequestParams = ['template', 'note', 'plan']
+const permittedCreateRequestParams = ['title','template', 'note', 'plan']
 
 const validation = [
+  body('title')
+    .notEmpty().withMessage('Title is Required')
+    .isString().withMessage('Title must be valid'),
   body('note')
     .notEmpty().withMessage('Note is Required')
     .isString().withMessage('Note must be valid'),
@@ -16,17 +19,12 @@ const validation = [
 ]
 
 const apiCreateRequest = async function(req, res) {
-  const { body: requestParams } = req
-  const currentUser = res.locals.currentUser
+  const { locals: { currentUser } } = res
+  const { body } = req
 
-  const data = requestParams
-  if (req.file && req.file.location) {
-    data.photo = req.file.location
-  }
+  const request = await currentUser.createRequest(body, { fields: permittedCreateRequestParams })
+  return res.status(200).json({ request })
 
-  const request = await currentUser.createRequest(data, { attributes: permittedCreateRequestParams })
-
-  res.status(200).json({ request })
 }
 
-module.exports = [authenticateCurrentUserByToken, MulterParser.none(), validation, checkValidation, apiCreateRequest]
+module.exports = [authenticateCurrentUserByToken, MulterParser.none(), checkValidation(validation), apiCreateRequest]
